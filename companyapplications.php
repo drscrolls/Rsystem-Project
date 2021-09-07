@@ -581,7 +581,7 @@ VALUES (NULL,
 
 
             <!-- Page Content-->
-            <div class="page-content">
+            <!-- <div class="page-content">
 
                 <div class="container-fluid">
                     <!-- Page-Title -->
