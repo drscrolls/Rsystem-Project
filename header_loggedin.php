@@ -11,6 +11,8 @@
         $profileLink = '';
 
         $userName = null;
+
+
         if(isset($_SESSION['user'])){
             $homeLink = 'main.php';
             $profileLink = 'profile.php';
