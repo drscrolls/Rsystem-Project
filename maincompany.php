@@ -267,7 +267,7 @@ VALUES (NULL,
                         <div class="col-lg-6">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <h5 class="mt-0">Here the list of all registered interns.</h5>
+                                    <p class="mt-0 font-weight-light">List of available interns.</p>
                                 </li>
                             </ul>
                         </div><!--end col-->

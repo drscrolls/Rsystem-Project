@@ -72,13 +72,21 @@ if(isset($_POST['internship-btn']))
     if($result)
     {
         $smsg="Internship inserted successfully";
-        $_SESSION["message"] = $smsg;
+		$_SESSION['title']="Great";
+		$_SESSION['message'] ='Internship has been created successfully';
+    //    echo $_SESSION['message'];
+    //     exit();
+
         header("Location: maincompany.php");
         exit;
     }else
     {
         $fmsg="Internship entry failed" . mysqli_error($conn);
         $_SESSION["error"] = $fmsg;
+        
+    //    echo $_SESSION['error'];
+    //    exit();
+
         header("Location: maincompany.php");
         exit;
     }

@@ -32,12 +32,13 @@ if(isset($_POST['register-btn']))
 	$companypostaladdress=$_POST['companypostaladdress'];
 	$companyprimaryphone=$_POST['companyprimaryphone'];
 	$companysecondaryphone=$_POST['companysecondaryphone']; 
-	
     $companyabout=$_POST['companyabout'];
 
-	//echo "email: ".$companyemail." password: ".$companypassword;
-			// password encrypt using SHA256();
-		$companypassword = hash('sha256', $companypassword);
+    
+    $companypassword = hash('sha256', $companypassword);
+    $companypassword = substr($companypassword, 0, 50);
+    
+    
     $photo = $_FILES['companylogo'];
     // echo var_dump($photo);
     // exit();
@@ -86,8 +87,9 @@ if(isset($_POST['register-btn']))
     }
     else
 	{
-		echo "Representative registration failed:  " . mysqli_error($conn);
-		exit();
+		$fmsg =  "Representative registration failed:  " . mysqli_error($conn);
+        $_SESSION["error"] = $fmsg;
+		// exit();
 	}
 	
 	
