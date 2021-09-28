@@ -3,7 +3,6 @@
 session_start();
 require_once 'dbconnect.php';
 
-try {
  // if session is not set this will redirect to login page
     if(isset($_SESSION['company'])=="" ) {
         header("Location: index.php");
@@ -28,7 +27,7 @@ try {
 
 
 //-----------SUBMIT FORM-------------------
-if(isset($_POST['submit-internship']))
+if(isset($_POST['internship-btn']))
 {
     $title=$_POST['title'];
     $desc=$_POST['description'];
@@ -64,8 +63,8 @@ if(isset($_POST['submit-internship']))
             '$attributes',
             '$additionalinfo');";
     
-    echo "query = ".$query;
-    exit();
+    // echo "query = ".$query;
+    // exit();
 
 
     $result=mysqli_query($conn,$query);
@@ -85,14 +84,6 @@ if(isset($_POST['submit-internship']))
     }
                 
 }
-
-} catch (\Throwable $th) {
-    $_SESSION["error"] = "error occured: ".$th;
-    echo "error: ".$th;
-    header("Location: maincompany.php");
-    exit;
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -135,17 +126,17 @@ if(isset($_POST['submit-internship']))
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <label>Company name</label> 
-                                                    <input type="text" placeholder="Company Name" class="form-control" name="companyname" id="companyname" readonly value="<?=$userRow['companyname'];?>" required/>
+                                                    <input type="text" placeholder="Company Name" class="form-control" name="companyname" id="companyname" readonly value="<?=$userRow['companyname'];?>" />
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <label>Job title</label>     
-                                                    <input type="text" placeholder="Enter job title" class="form-control" name="title" id="title" required/>
+                                                    <input type="text" placeholder="Enter job title" class="form-control" name="title" id="title" />
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <label>Location</label>     
-                                                    <input type="text" placeholder="Enter location" class="form-control" name="city" id="city" required/>
+                                                    <input type="text" placeholder="Enter location" class="form-control" name="city" id="city" />
                                                 </div>
                                             </div>
 
@@ -153,7 +144,7 @@ if(isset($_POST['submit-internship']))
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <label>Region</label> 
-                                                    <select class="form-control" id="region"  name="region" placeholder="Select region" required>
+                                                    <select class="form-control" id="region"  name="region" placeholder="Select region" >
                                                         <option value="" selected=""> - Select region - </option>
                                                         <option value="Greater Accra Region">Greater Accra Region</option>
                                                         <option value="Ashanti Region">Ashanti Region</option>
@@ -170,19 +161,20 @@ if(isset($_POST['submit-internship']))
 
                                             <div class="form-group">
                                                 <label>Skills needed</label>  
-                                                <textarea rows="5" name="skillsneeded" placeholder="Address..." class="form-control" required></textarea>
+                                                <textarea rows="5" name="skillsneeded" placeholder="Address..." class="form-control" ></textarea>
                                             </div>
                                                     
 
                                             <div class="form-group">
                                                 <label>Job description</label> 
-                                                <textarea id="elm1" name="description" required></textarea>
+                                                <textarea id="elm1" name="description" ></textarea>
                                             </div>
 
                                             
                                             <div class="form-group">
-                                                <button class="btn btn-danger btn-sm text-light px-4 mt-3 float-right mb-0 ml-2">Cancel</button>
-                                                <button type="submit" name="submit-internship" class="btn btn-primary btn-sm text-light px-4 mt-3 float-right mb-0">Save</button>                                                
+                                                <a href="maincompany.php" class="btn btn-danger btn-sm text-light px-4 mt-3 float-right mb-0 ml-2">Cancel</a>
+
+                                                <button type="submit" name="internship-btn" class="btn btn-primary btn-sm text-light px-4 mt-3 float-right mb-0">Save</button>                                                
                                             </div>
                                         </form>
                                     </div>

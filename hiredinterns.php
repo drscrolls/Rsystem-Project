@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once 'dbconnect.php';
-include 'postinternship.php';
+
     
 $_SESSION['page-title'] = "";
 

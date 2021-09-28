@@ -2,7 +2,7 @@
 session_start();
 require_once 'dbconnect.php';
 
-$requ=$_REQUEST[id];
+$requ=$_REQUEST['id'];
 // echo "SendApplication.php requ=".$requ;
 
 if($requ!=""){
@@ -30,15 +30,16 @@ if($requ!=""){
 
 
 
-if(isset($_POST['submit-btn']))
+if(isset($_POST['send-btn']))
 {
 	//-----varaibles-------------
-	$companyId=$iRow['companyId'];
-	$internshipId=$requ;
+	$companyId=$_POST['companyId'];
+	$internshipId=$_POST['internshipId'];
 	$userId=$_SESSION['user'];
 
 
 	// echo "<br/>---------";
+	// exit();
 	$subject=$_POST['subject'];
 	$message=$_POST['message'];
 	$attach_cv=$_POST['attach_cv'];
@@ -68,12 +69,17 @@ if(isset($_POST['submit-btn']))
 		 '$subject',
 		 '$attach_cv');";
 		$result=mysqli_query($conn,$query);
-
+		
+		
+		// echo "query = ".$query;
+		// exit();
 
 
 	if($result)
 	{
 		// echo "Success";
+		$_SESSION['title']="Good job";
+		$_SESSION['message'] ='Your application has been successfully sent';
 	}
 	else
 	{
@@ -96,17 +102,17 @@ if(isset($_POST['submit-btn']))
 	if($result)
 	{
 		// echo "Success";
+		$_SESSION['message'] = $_SESSION['message']. ". You will be notified when the company responds.";
 	}
 	else
 	{
 		echo "Error:: ".mysqli_error($conn);
 	}
-	$path="viewinternship.php?internshipId=".$requ;
-//	mail to company
+	$path="viewinternship.php?internshipId=".$internshipId;
+	
+	//	mail to company
 	//mail("dr.scrolls@gmail.com", $subject, $message);
 	//echo '<script>alert("Success - your application has been successful sent");</script>';
-	$_SESSION['title']="Good job";
-	$_SESSION['message'] ='Your application has been successfully sent';
 	header("Refresh: 1; URL =".$path);
 
 

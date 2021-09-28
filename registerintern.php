@@ -33,6 +33,8 @@ if(isset($_POST['submitbutton']))
 
     // password encrypt using SHA256();
     $userpassword = hash('sha256', $userpassword);
+    $userpassword = substr($userpassword, 0, 50);
+    
 
 
     $userphoto = "./uploads/default.png";
@@ -58,6 +60,7 @@ if(isset($_POST['submitbutton']))
         }
     }	
     
+
     $userresume = "";
     //upload Resume
     if (isset($_FILES['userresume'])){
@@ -83,7 +86,6 @@ if(isset($_POST['submitbutton']))
         // exit();
     }	
     
-	
 	
 	$query="INSERT INTO `users` (`userId`, 
         `userfname`,

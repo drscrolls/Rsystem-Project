@@ -231,7 +231,7 @@ VALUES (NULL,
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <body>
+    <body style="background-image: url('assets/images/.jpg');">
 
         <?php include 'header_loggedin.php'; ?>
 

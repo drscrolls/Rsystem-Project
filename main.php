@@ -96,7 +96,7 @@ else{
                         <div class="row">
                         
                         <?php
-                            $query = $conn->query("SELECT * FROM `internships`") or die(mysqli_error());
+                            $query = $conn->query("SELECT * FROM `internships`");
 
                             while($f_query = $query->fetch_array()){
 
@@ -119,7 +119,7 @@ else{
                                 //echo "Image not exists";
                                 $imgCustPath="uploads/default.png";
                             }
-                            //echo "<br/><font style='color:#f00'><br/>imgCustPath= ".$imgCustPath."</font>";
+                            // echo "<br/><font style=''><br/>imgCustPath= ".$imgCustPath."</font>";
 
 
                             }
@@ -134,9 +134,9 @@ else{
                             $tres=mysqli_query($conn,"SELECT * FROM `applications` WHERE userId=$usrId AND `internshipId`=".$f_query['internshipId']);
                             $appRow=mysqli_fetch_array($tres);
 
-                            if($appRow['internshipId']!=$f_query['internshipId'])
-                            {
                             
+                                $length = 200;
+                                $description = strlen($f_query['description']) > $length ? substr($f_query['description'],0,$length)."..." : $f_query['description'];
                             ?>
                             <div class="col-lg-3 pointer">
                                 <div class="card pointer">                                                            
@@ -144,17 +144,29 @@ else{
                                         <div class="text-right">                                                       
                                             <a href="fav.php?internshipId=<?php echo $f_query['internshipId']; ?>&userId=<?php echo $_SESSION['user']; ?>" class="mr-2" data-toggle="modal" data-animation="bounce" data-target=".bs-example-modal-lg"><i class="far fa-star text-info font-16"></i></a>
                                         </div>                                    
-                                        <img onclick="window.location='viewinternship.php?internshipId=<?php echo $f_query['internshipId']; ?>'" src="<?php echo $cRow['companylogo']; ?>" style="width: 128px; height: 128px;cursor: pointer !important;" alt="user" class="rounded-circle mt-n3">
+                                        <img onclick="window.location='viewinternship.php?internshipId=<?php echo $f_query['internshipId']; ?>'" src="<?php echo $cRow['companylogo']; ?>" style="width: 100px; height: 100px;cursor: pointer !important;" alt="user" class="rounded-circle mt-n3">
                                         <h5 class="mb-1 client-name"><?php echo $f_query['title']; ?></h5> 
                                         <p class="text-muted"><?php echo $cRow['companyname']?></p>                                    
-                                        <p class="text-center font-14"><?php echo $f_query['description']?></p>
-                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="window.location='viewinternship.php?internshipId=<?php echo $f_query['internshipId']; ?>'">View more</button>
-                                    </div><!--end card-body-->                                                                     
+                                        <p class="text-center font-14"><?php echo $description;?></p>
+                                        <?php
+                                            if($appRow['internshipId']!=$f_query['internshipId'])
+                                            {
+                                        ?>
+                                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="window.location='viewinternship.php?internshipId=<?php echo $f_query['internshipId']; ?>'">View more</button>
+                                        <?php
+                                            }else{
+                                                ?>
+                                                    <button type="button" class="btn btn-sm btn-info w-100" onclick="window.location='viewinternship.php?internshipId=<?php echo $f_query['internshipId']; ?>'">Already applied</button>
+                                                <?php
+                                            }
+                                        ?>
+                                    
+                                    
+                                        </div><!--end card-body-->                                                                     
                                 </div><!--end card-->
                             </div><!--end col-->
 
                             <?php 
-                                    }
                                 }
                             ?> 
                         </div><!--end row-->

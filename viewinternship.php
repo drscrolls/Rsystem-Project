@@ -183,13 +183,32 @@
                             </div><!--end card-->
                         </div><!--end col-->
 
+                        <?php
+
+                        $tres=mysqli_query($conn,"SELECT * FROM `applications` WHERE userId=$userId AND `internshipId`=".$iRow['internshipId']);
+                        $appRow=mysqli_fetch_array($tres);
+
+
+                        ?>
                         <div class="col-lg-6">
                             <div class="card">                                       
                                 <div class="card-body"> 
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <div class="button-items">
+                                            <?php
+                                                if($iRow['internshipId']!=$appRow['internshipId'])
+                                                {
+                                            ?>
                                                 <button type="button" class="btn btn-dark btn-lg btn-block waves-effect waves-light" data-toggle="modal" data-animation="bounce" data-target=".bs-example-modal-lg">Apply Now </button>
+                                            <?php
+                                                }else{
+                                                ?>
+                                                    <button type="button" disabled="true" class="btn btn-info btn-lg btn-block waves-effect waves-light disabled" style="cursor: not-allowed;">Already applied</button>
+                                                <?php
+                                                }
+                                            ?>
+                                            
                                             </div>
                                         </div>
                                     </div>
@@ -231,18 +250,21 @@
                             </div>
                             <div class="modal-body">
                                 <div class="card mb-0 p-3">
-                                    <form>
+                                    <form method="post" action="sendapplication.php">
                                         <div class="form-group mb-3">
                                             <input type="email" value="<?php echo $cRow['companyemail']; ?>" readonly disabled class="form-control" placeholder="To">
                                         </div><!--end form-group-->
                                         <div class="form-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Subject">
+                                            <input type="text" class="form-control" name="subject" placeholder="Subject">
+                                            <input type="hidden" class="form-control" name="internshipId" value="<?php echo $_REQUEST['internshipId'];?>">
+                                            <input type="hidden" class="form-control" name="companyId" value="<?php echo $cRow['companyId'];?>">
+                                            <textarea name="message" class="form-control" placeholder="Message" hidden id="msgTextbox"></textarea>
                                         </div><!--end form-group-->
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="checkbox checkbox-primary">
-                                                        <input id="checkbox2" type="checkbox" checked="">
+                                                        <input id="checkbox2" type="checkbox" name="attach_cv">
                                                         <label for="checkbox2">
                                                             Attach my CV
                                                         </label>
@@ -259,7 +281,7 @@
             
                                         <div class="btn-toolbar form-group mb-0 modal-footer">
                                             <div class="pull-left">
-                                                <button class="btn btn-primary waves-effect waves-light"><span>Send</span> <i class="far fa-paper-plane ml-3"></i></button>
+                                                <button type="submit" name="send-btn" class="btn btn-primary waves-effect waves-light"><span>Send</span> <i class="far fa-paper-plane ml-3"></i></button>
 
                                                 <button type="button"  data-dismiss="modal" class="btn btn-danger waves-effect waves-light "><span>Discard</span><i class="far fa-trash-alt ml-3"></i></button>
                                                 
@@ -286,9 +308,19 @@
                 height: 320,                 // set editor height
                 minHeight: null,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor
-                focus: false                 // set focus to editable area after initializing summernote
+                focus: false,              // set focus to editable area after initializing summernote
+                callbacks: {
+                    onKeyup: function(e) {
+                        composeMessage();
+                    }
+                }
             });
 
         });
+
+        function composeMessage(){
+            var textareaValue = $('.summernote').summernote('code');
+            $("#msgTextbox").val(textareaValue);
+        }
     </script>   
 </html>
