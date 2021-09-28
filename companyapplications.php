@@ -309,34 +309,38 @@ VALUES (NULL,
                                                     $status='<span class="label label-danger">Denied</span>';
                                                     break;
                                                 }
+                                                $length = 140;
+                                                $description = strlen($iRow['description']) > $length ? substr($iRow['description'],0,$length)."..." : $iRow['description'];
+                                                $dateApplied=date_create($f_query['date']);
+                                                $dateApplied = date_format($dateApplied,"Y/m/d h:i A");
                                                 ?>
                                             <tr>
-                                                <td class="text-capitalize">
+                                                <td class="text-capitalize d-flex">
                                                     <img src="<?php echo $imgCustPath; ?>" onerror="this.style.display='none';" alt="" class="thumb-sm rounded-circle mr-2">
                                                     <?php echo $uRow['userfname'];?> <?php echo $uRow['userlname']; ?>
                                                 </td>
-                                                <td class="teaser"><?php echo $iRow['title'].'. '.$iRow['description']; ?></td>
+                                                <td class="teaser"><?php echo $iRow['title'].'. '.$description; ?></td>
                                                 <td align ="center" style="vertical-align:middle;">
                                                     <?php if($f_query['status']=="Approved")
                                                             {
                                                             ?>
-                                                                <span class="float-left btn btn-success btn-sm py-1">Approved</span>
+                                                                <span class="float-left text-success py-1">Approved</span>
 
                                                             <?php
                                                             }else if($f_query['status']=="Pending"){
                                                             ?>
-                                                                <span class="float-left btn btn-warning btn-sm py-1">Pending</span>
+                                                                <span class="float-left text-warning py-1">Pending</span>
 
                                                             <?php
                                                             }else if($f_query['status']=="Denied"){
                                                             ?>
-                                                                <span class="float-left btn btn-danger btn-sm py-1">Denied</span>
+                                                                <span class="float-left text-danger py-1">Denied</span>
 
                                                             <?php
                                                             }
                                                     ?>
                                                 </td>               
-                                                <td><?php echo $f_query['date']?></td>
+                                                <td><?php echo $dateApplied; ?></td>
                                                 <td>
                                                     <a href="applicationdetails.php?applicationId=<?php echo $f_query['applicationId']; ?>">
                                                             <button class="float-left btn btn-light btn-sm py-1"><i class="far fa-eye"></i></button>

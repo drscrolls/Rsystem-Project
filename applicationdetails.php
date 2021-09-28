@@ -149,7 +149,7 @@ if(isset($_POST['save-status-btn']))
                                                         </div><!--end card-body-->                                                                     
                                                     </div>    
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-5">
                                                         <div class="met-basic-detail">
                                                                 <h3 class="text-capitalize"><?php echo $aRow['subject']; ?></h3>
                                                                 <p class="text-uppercase font-14"><?php echo $aRow['date']; ?>  </p>
@@ -158,33 +158,25 @@ if(isset($_POST['save-status-btn']))
                                                                 </p>
                                                                 
                                                                 <div class="my-3">
-                                                                    <button class="btn btn-primary px-3 waves-effect waves-light" data-toggle="modal" data-animation="bounce" data-target="#hireModal">Hire Me</button>
-                                                                    <button class="btn btn-outline-info px-3 waves-effect waves-light" data-toggle="modal" data-animation="bounce" data-target="#rejectModal">Reject Application</button>
-                                                                    <button class="btn btn-outline-info px-3">Send Message</button>
-                                                                    <a href="tel:<?php echo $auserRow['userprimaryphone']; ?>" class="btn btn-outline-info px-3">Call</a>
+                                                                    <button class="btn btn-success px-3 waves-effect waves-light d-flex my-2" data-toggle="modal" data-animation="bounce" data-target="#hireModal">
+                                                                        Accept Application
+                                                                        <span class="fa fa-thumbs-up p-1 px-3"></span>
+                                                                    </button>
+                                                                    <button class="btn btn-danger px-3 waves-effect waves-light d-flex my-2" data-toggle="modal" data-animation="bounce" data-target="#rejectModal">
+                                                                        Reject Application
+                                                                        <span class="fa fa-times font-16 p-1 px-3"></span>
+                                                                    </button>
                                                                 </div> 
                                                                 
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                            <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="row">
 
-                                                                <div class="col-lg-12 mx-auto">
-                                                                    
-                                                                    <div class="own-detail bg-blue">
-                                                                        <h1><?php echo  mt_rand(2,5); ?>+</h1>
-                                                                        <h5>Years Experience</h5>
-                                                                    </div>
-                                                                    <div class="own-detail own-detail-project bg-secondary">
-                                                                        <h1><?php echo  mt_rand(3,15); ?></h1>
-                                                                        <h5>Complete Projects</h5>
-                                                                    </div>
-                                                                    <div class="own-detail own-detail-happy bg-success">
-                                                                        <h1><?php echo  mt_rand(5,20); ?></h1>
-                                                                        <h5>Happy Clients</h5>
-                                                                    </div>
-                                                                </div>                                        
-                                                            </div>                                                                                                                       
+                                                            <div class="col-12">
+                                                                <img src="assets/images/widgets/p-1.svg" alt="" class="img-fluid">
+                                                            </div>                                      
+                                                        </div>                                                                                                                       
                                                     </div>
                                                 </div>         
                                                 </div><!--end card-body-->
@@ -208,23 +200,20 @@ if(isset($_POST['save-status-btn']))
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-white">
-                        <h5 class="modal-title mt-0" id="exampleModalLabel">Hire Intern</h5>
+                        <h5 class="modal-title mt-0" id="exampleModalLabel">Accept Application</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body bg-white">
-                                  
-                         <div class="text-center w-100">
-                             <i class="mdi mdi-comment-account-outline fa-9x"></i>
-                         </div>                                       
+                                                                   
                                                                     
-                        <h4 class="pb-2 text-center">Proceed to hire this intern?</h4>
+                        <h5 class="pb-2 text-center">Are you sure you want to accept this application?</h5>
 
 
                         <div class="mt-2" align="center">
                             <div class="my-3">
-                                <a href="setstatus.php?applicationId=<?php echo $aRow['applicationId']; ?>&status=Approved"><button class="btn btn-primary px-3">Hire Intern</button></a>
+                                <a href="setstatus.php?applicationId=<?php echo $aRow['applicationId']; ?>&status=Approved"><button class="btn btn-success px-3">Accept Application</button></a>
                                 <button class="btn btn-outline-info px-3 waves-effect waves-light ml-2" data-dismiss="modal" >Cancel</button>
                             </div> 
                         </div>
@@ -249,17 +238,13 @@ if(isset($_POST['save-status-btn']))
                         </button>
                     </div>
                     <div class="modal-body bg-white">
-                                  
-                         <div class="text-center w-100">
-                             <i class="mdi mdi-comment-question-outline fa-9x"></i>
-                         </div>                                       
                                                                     
                         <h5 class="pb-2 text-center">Are you sure you want to reject this application?</h5>
 
 
                         <div class="mt-2" align="center">
                             <div class="my-3">
-                                <a href="setstatus.php?applicationId=<?php echo $aRow['applicationId']; ?>&status=Denied"><button class="btn btn-primary px-3">Reject Application</button></a>
+                                <a href="setstatus.php?applicationId=<?php echo $aRow['applicationId']; ?>&status=Denied"><button class="btn btn-danger px-3">Reject Application</button></a>
                                 <button class="btn btn-outline-info px-3 waves-effect waves-light ml-2" data-dismiss="modal" >Cancel</button>
                             </div> 
                         </div>

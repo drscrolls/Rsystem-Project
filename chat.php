@@ -5,19 +5,19 @@ $_SESSION['page-title'] = "Chat";
 
 
 
-    // select applications detail
-    $appres=mysqli_query($conn,"SELECT COUNT(*) FROM applications WHERE status NOT LIKE 'Approved' AND userId=".$_SESSION['user']);
-    $appRow=mysqli_fetch_array($appres);
-    $app_count=$appRow['COUNT(*)'];
+// select applications detail
+$appres=mysqli_query($conn,"SELECT COUNT(*) FROM applications WHERE status NOT LIKE 'Approved' AND userId=".$_SESSION['user']);
+$appRow=mysqli_fetch_array($appres);
+$app_count=$appRow['COUNT(*)'];
 
 
-    $tres=mysqli_query($conn,"SELECT * FROM `users` WHERE `userId`=".$_SESSION['user']);
-    //echo "Session ".$_SESSION['company'];
-    $userRow=mysqli_fetch_array($tres);
-    if(!$tres)
-    {
-        echo "Error: ".mysqli_error($conn);
-    }
+$tres=mysqli_query($conn,"SELECT * FROM `users` WHERE `userId`=".$_SESSION['user']);
+//echo "Session ".$_SESSION['company'];
+$userRow=mysqli_fetch_array($tres);
+if(!$tres)
+{
+    echo "Error: ".mysqli_error($conn);
+}
 
 
 
@@ -28,11 +28,11 @@ $senderId=$_SESSION['company'];
 
 
 //PROCESS MESSAGE
-  if(isset($_POST['message']) ) {  
+  if(isset($_POST['send-message-btn']) ) {  
     
     $message=$_POST['message'];
-    $senderId=$_SESSION['company'];
-    $recepientId=$_SESSION['temp_guest'];
+    $senderId=$_POST['userId'];
+    $recepientId=$_POST['companyId'];
 
     // echo "senderId: ".$senderId."<br/>";
     // echo "recepientId: ".$recepientId."<br/>";
@@ -50,163 +50,18 @@ $senderId=$_SESSION['company'];
 if(!$result)
 {
   echo "Error:: ".mysqli_error($conn);
+//   exit();
 }
-// echo "Message sent successfully";
+echo "Message sent successfully";
 // exit();
 
- header("Location: chat.php?userId=".$recepientId); 
+ header("Location: chat.php?companyId=".$recepientId."#send"); 
 
 }
 
 
 
 
-
-//-----------SUBMIT FORM-------------------
-if(isset($_POST['submit-internship']))
-{
-    $title=$_POST['title'];
-    $desc=$_POST['desc'];
-    $skillsneeded=$_POST['skillsneeded'].",".$_POST['getskill'];
-    
-    $city=$_POST['city'];
-    $region=$_POST['region'];
-    $genderspecific=$_POST['genderspecific'];
-    $coursespecific=$_POST['coursespecific'];
-    $giveallowance=$_POST['giveallowance'];
-    $allowanceprice=$_POST['allowanceprice'];
-    $allowanceperiod=$_POST['allowanceperiod'];
-if ($giveallowance=='No') {
-        $allowanceperiod="none";
-        $allowanceprice="none";
-    
-    }
-
-    $attributes=$_POST['attributes'];
-    $agemin=$_POST['agemin'];
-    $agemax=$_POST['agemax'];
-    
-
-    $levelspecific=$_POST['levelspecific'];
-    $hoursmin=$_POST['hoursmin'];
-    $hoursmax=$_POST['hoursmax'];
-    
-    if($hoursmax=="" && $hoursmin=="")
-    {
-        $hoursmin=0;
-        $hoursmax=0;
-    }
-    else{
-        $hoursmin=$_POST['hoursmin'];
-        $hoursmax=$_POST['hoursmax'];
-    }
-    
-    $needexperience=$_POST['needexperience'];
-    if($needexperience=='-Please Select-')
-    {
-        $needexperience='<none>';
-    }
-    $yearsexperience=$_POST['yearsexperience'];
-    if($needexperience=='<none>')
-    {
-        
-            $yearsexperience=0;
-        
-        
-    }
-
-    if(empty($yearsexperience))
-        {
-            $yearsexperience=0;
-        }
-        
-
-    $additionalinfo=$_POST['additionalinfo'];
-if($additionalinfo=="")
-    {
-        $additionalinfo="<none>";
-    }
-
-$companyId=$_SESSION['company'];
-
-    //$companyName=$_SESSION['companyname'];
-        
-    $query="INSERT INTO `internships` (
-    `internshipId`, 
-    `title`,
-    `description`,
-    `companyId`, 
-    `companyname`, 
-    `skillsneeded`, 
-    `city`,
-    `region`, 
-    `genderspecific`,
-    `giveallowance`,
-    `allowanceamount`,
-    `allowanceperiod`,
-    `coursespecific`,
-    `attributes`,
-    `currentdate`,
-    `currenttime`,
-    `agerange`,
-    `agemin`,
-    `agemax`,
-    `level`,
-
-    `needexperience`,
-    `yearsexperience`,
-
-    `workinghours`,
-    `hoursmin`,
-    `hoursmax`,
-    `additionalinfo`) 
-VALUES (NULL, 
-'$title',
- '$desc',
- '$companyId',
- '$companyName', 
- '$skillsneeded', 
- '$city',
- '$region',
- '$genderspecific', 
- '$giveallowance',
- '$allowanceprice',
- '$allowanceperiod',
- '$coursespecific',
- '$attributes',
- '$currDate',
- '$currTime',
- '$agerange',
- '$agemin',
- '$agemax',
- '$levelspecific',
- '$needexperience',
- '$yearsexperience',
- '$workhours',
- '$hoursmin',
- '$hoursmax',
- '$additionalinfo');";
-    
-    
-    $result=mysqli_query($conn,$query);
-    
-    if($result)
-    {
-        $smsg="Internship inserted successfully";
-        header("Refresh: 1; URL = index.php");
-    ?>
-        <script type='text/javascript'>confirm('New internship successfully posted');</script>
-    <?php
-        header("Location: main_company.php");
-    exit;
-    
-    }else
-    {
-        
-        $fmsg="Internship entry failed" . mysqli_error($conn);
-    }
-                
-}
 
 
 ?>
@@ -297,7 +152,7 @@ VALUES (NULL,
                                         ?>
                                         <a href="chat.php?companyId=<?php echo $companyRow['companyId']; ?>" class="media border-bottom <?php echo $companyRow['companyId'] == $_REQUEST['companyId']? 'bg-soft-info' :''; ?>">
                                             <div class="media-left">
-                                                <img src="<?php echo $companyRow['companylogo']; ?>" onerror="this.src='uploads/pictures/default.png';" alt="<?= $companyRow['companyname']; ?>" class="rounded-circle thumb-md">
+                                                <img src="<?php echo $companyRow['companylogo']; ?>" onerror="this.src='uploads/default.png';" alt="<?= $companyRow['companyname']; ?>" class="rounded-circle thumb-md">
                                                 <span class="round-10 bg-success"></span>
                                             </div><!-- media-left -->
                                             <div class="media-body">
@@ -416,17 +271,17 @@ VALUES (NULL,
                                         ?>
 
                                         <!-- MESSAGE TO THE LEFT -->
-                                        <div class="media d-lg-inline-block">
+                                        <div class="media">
                                             <div class="media-body">
-                                                <div class="chat-msg" style="margin-left: 0px !important;">
+                                                <div class="chat-msg mb-0" style="margin-left: 0px !important;">
                                                     <p class="bg-blue text-white shadow-sm mb-1" style="border-radius: 0px 20px 20px 20px;padding: 14px;min-width:5em;">
                                                         <?php echo $f_query['message']; ?>
                                                     </p>
-                                                    <span class="float-left font-11 text-muted"><?= $time;?></span>
                                                 </div>
+                                                <span class="float-left font-11 text-muted mb-2"><?= $time;?></span>
                                             </div><!--end media-body--> 
                                         </div><!--end media-->  
-
+                                        
                                         <?php
                                         //If company is the sender...
 
@@ -462,20 +317,24 @@ VALUES (NULL,
 
                                     </div>  <!-- end chat-detail -->                                               
                                 </div><!-- end chat-body -->
-                                <div class="chat-footer bg-white">
+                                <div class="chat-footer bg-white" id="send">
+
+                                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
                                     <div class="row">                                                    
                                         <div class="col-12 col-md-9">
                                             <span class="chat-admin"><img src="<?php echo $imgCustPath; ?>" alt="user" class="rounded-circle thumb-sm"></span>
-                                            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-                                                <input type="text" class="form-control" placeholder="Type something here..." name="message">
+                                                <input type="text" class="form-control" placeholder="Type something here..." name="message" required/>
+                                                <input type="hidden" class="form-control" value="<?php echo $_REQUEST['companyId']; ?>" name="companyId">
+                                                <input type="hidden" class="form-control" value="<?php echo $_SESSION['user']; ?>" name="userId">
                                             </form>
                                         </div><!-- col-8 -->
                                         <div class="col-3 text-right">
                                             <div class="d-none d-sm-inline-block chat-features">
-                                                <button class="btn btn-blue rounded-circle shadow-sm"><i class="fas fa-paper-plane"></i></button>
+                                                <button type="submit" name="send-message-btn" class="btn btn-blue rounded-circle shadow-sm"><i class="fas fa-paper-plane"></i></button>
                                             </div>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
+                                </form>
                                 </div><!-- end chat-footer -->
                             </div><!--end chat-box-right --> 
                         </div> <!-- end col -->                           
@@ -489,9 +348,12 @@ VALUES (NULL,
         <?php include 'footer.php'; ?>  
 </body>                                           
                 
+           
 
 <script>
     $(".chat-detail").slimScroll({
-        height: 'auto'
+        height: '630px',
+        start: 'bottom',
+        scrollTo: '630px'
     });
 </script>
