@@ -138,10 +138,10 @@ echo "Message sent successfully";
                                         $lastMessageTime = date_format($lastMessageTime,"h:i A");
                                         $lastMessage = $f_query['message'];
                                         $isLastMessageRead = true;
-                                        // echo "lastmessage q = ".$msgQuery;
+
                                         if($msgRow){
                                             $lastMessage = $msgRow['message'];
-                                            $length = 40;
+                                            $length = 20;
                                             $lastMessage = strlen($lastMessage) > $length ? substr($lastMessage,0,$length)."..." : $lastMessage;
                                             
                                             $isLastMessageRead = $msgRow["status"] == "read" ? true : false;
@@ -158,8 +158,8 @@ echo "Message sent successfully";
                                             <div class="media-body">
                                                 <div class="d-inline-block">
                                                     
-                                                    <h6 class="text-capitalize <?= $isLastMessageRead ? 'font-weight-normal' : ''?>"><?php echo $companyRow['companyname']; ?></h6>
-                                                    <p class="teaser float-left text-muted"><?php echo $f_query['message'];?> </p>
+                                                    <h6 class="float-left text-capitalize <?= $isLastMessageRead ? 'font-weight-normal' : ''?>"><?php echo $companyRow['companyname']; ?></h6>
+                                                    <p class="teaser float-left text-muted"><?php echo $lastMessage;?> </p>
                                                 </div>
                                                 <!-- <div>
                                                     <span><?php echo $lastMessageTime; ?></span>
@@ -258,7 +258,8 @@ echo "Message sent successfully";
 
                                         $mquery = $conn->query("SELECT * FROM messages WHERE (recepientId=$userId AND senderId=$companyId) OR  (recepientId=$companyId AND senderId=$userId) ORDER BY `timesent` ASC");
                                         $prevMsgDirection = '';
-                                        
+
+
                                         while($f_query = $mquery->fetch_array()){
 
                                             // 
@@ -295,11 +296,11 @@ echo "Message sent successfully";
                                             <div class="media">                                                        
                                                 <div class="media-body reverse">
                                                     <div class="chat-msg" style="margin-right: 0px !important;">
-                                                        <p class="bg-white shadow-sm d-flex mb-1" style="border-radius: 20px 0px 20px 20px;padding: 14px;min-width:5em;">
+                                                        <p class="bg-white shadow-sm mb-1" style="border-radius: 20px 0px 20px 20px;padding: 14px;min-width:5em;">
                                                             <?php echo $f_query['message']; ?>
                                                         </p>
-                                                        <span class="float-right font-11 text-muted"><?= $time;?></span>
-                                                    </div>                                                           
+                                                    </div> 
+                                                    <span class="float-right font-11 text-muted mb-2"><?= $time;?></span>                                                          
                                                 </div><!--end media-body--> 
                                                 
                                             </div><!--end media-->  

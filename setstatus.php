@@ -98,7 +98,7 @@ if($invoice_link=="" && $status!="Approved"){
 {
 
 $link_visit='Internship details: <a href="viewinternship.php?internshipId='.$internshipId.'" style="color:rgba(230, 161, 52, 1);font-size:14px;"><u>Click here</u></a>';
-	$message="Congratulations! Your application has been ".$status_span."<br/>".$link_visit."<br/>".$invoice_link;
+	$message="Congratulations! Your application for internship has been ".$status_span."<br/>".$link_visit;
 }
  	//SEND CHAT MESSAGE
 	$query="INSERT INTO `messages` (`messageId`, 

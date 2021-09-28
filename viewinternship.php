@@ -185,47 +185,70 @@
 
                         <?php
 
-                        $tres=mysqli_query($conn,"SELECT * FROM `applications` WHERE userId=$userId AND `internshipId`=".$iRow['internshipId']);
-                        $appRow=mysqli_fetch_array($tres);
+                        if(isset($_SESSION['user'])){
+                            $tres=mysqli_query($conn,"SELECT * FROM `applications` WHERE userId=$userId AND `internshipId`=".$iRow['internshipId']);
+                            $appRow=mysqli_fetch_array($tres);
+                            ?>
+
+                                <div class="col-lg-6">
+                                    <div class="card">                                       
+                                        <div class="card-body"> 
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="button-items">
+                                                    <?php
+                                                        if($iRow['internshipId']!=$appRow['internshipId'])
+                                                        {
+                                                    ?>
+                                                        <button type="button" class="btn btn-dark btn-lg btn-block waves-effect waves-light" data-toggle="modal" data-animation="bounce" data-target=".bs-example-modal-lg">Apply Now </button>
+                                                    <?php
+                                                        }else{
+                                                        ?>
+                                                            <button type="button" disabled="true" class="btn btn-info btn-lg btn-block waves-effect waves-light disabled" style="cursor: not-allowed;">Already applied</button>
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="button-items">
+                                                        <button onclick="window.location.href='fav.php?internshipId=<?php echo $iRow['internshipId']; ?>&userId=<?php echo $userId; ?>';" type="button" class="btn btn-yellow btn-lg btn-block">Add to Favourites</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <img src="assets/images/widgets/p-1.svg" alt="" class="img-fluid">
+                                            </div>
+                                        </div>  <!--end card-body-->                                     
+                                    </div><!--end card-->
+                                </div><!--end col-->
 
 
-                        ?>
+
+                            <?php
+
+                        }else{
+                            ?>
+
                         <div class="col-lg-6">
                             <div class="card">                                       
                                 <div class="card-body"> 
-                                    <div class="row mb-3">
-                                        <div class="col-12">
-                                            <div class="button-items">
-                                            <?php
-                                                if($iRow['internshipId']!=$appRow['internshipId'])
-                                                {
-                                            ?>
-                                                <button type="button" class="btn btn-dark btn-lg btn-block waves-effect waves-light" data-toggle="modal" data-animation="bounce" data-target=".bs-example-modal-lg">Apply Now </button>
-                                            <?php
-                                                }else{
-                                                ?>
-                                                    <button type="button" disabled="true" class="btn btn-info btn-lg btn-block waves-effect waves-light disabled" style="cursor: not-allowed;">Already applied</button>
-                                                <?php
-                                                }
-                                            ?>
-                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="button-items">
-                                                <button onclick="window.location.href='fav.php?internshipId=<?php echo $iRow['internshipId']; ?>&userId=<?php echo $userId; ?>';" type="button" class="btn btn-yellow btn-lg btn-block">Add to Favourites</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="col-12">
                                         <img src="assets/images/widgets/p-1.svg" alt="" class="img-fluid">
                                     </div>
                                 </div>  <!--end card-body-->                                     
                             </div><!--end card-->
                         </div><!--end col-->
+
+                        <?php
+                        }
+                        
+
+                        ?>
 
                     </div><!--end row-->  
                 </div><!--end experience detail-->
